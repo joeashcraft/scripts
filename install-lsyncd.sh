@@ -1,10 +1,11 @@
 if [ -f /etc/redhat-release ]; then
-yum -y install lua lua-devel pkgconfig gcc asciidoc && \
-wget -O /root/lsyncd-2.1.5.tar.gz https://lsyncd.googlecode.com/files/lsyncd-2.1.5.tar.gz && \ 
-tar -xvzf lsyncd-2.1.5.tar.gz && \
-cd lsyncd-2.1.5 && \ 
-./configure && make && make install && \
-mkdir /var/log/lsyncd && \
+#yum -y install lua lua-devel pkgconfig gcc asciidoc && \
+yum -y install lsyncd
+#wget -O /root/lsyncd-2.1.5.tar.gz https://lsyncd.googlecode.com/files/lsyncd-2.1.5.tar.gz && \ 
+#tar -xvzf lsyncd-2.1.5.tar.gz && \
+#cd lsyncd-2.1.5 && \ 
+#./configure && make && make install && \
+#mkdir /var/log/lsyncd && \
 cat << 'EOF' > /etc/logrotate.d/lsyncd 
 /var/log/lsyncd/*log {
   missingok
@@ -17,7 +18,7 @@ cat << 'EOF' > /etc/logrotate.d/lsyncd
   endscript
 }
 EOF
-cat << 'EOF' > /etc/init.d/lsyncd
+#cat << 'EOF' > /etc/init.d/lsyncd
 #!/bin/bash
 #
 # lsyncd: Starts the lsync Daemon
@@ -30,63 +31,63 @@ cat << 'EOF' > /etc/init.d/lsyncd
 # single file buy collecting the inotify events.
 # processname: lsyncd
 
-. /etc/rc.d/init.d/functions
+#. /etc/rc.d/init.d/functions
 
-config="/etc/lsyncd.lua"
-lsyncd="/usr/local/bin/lsyncd"
-lockfile="/var/lock/subsys/lsyncd"
-pidfile="/var/run/lsyncd.pid"
-prog="lsyncd"
-RETVAL=0
+#config="/etc/lsyncd.lua"
+#lsyncd="/usr/local/bin/lsyncd"
+#lockfile="/var/lock/subsys/lsyncd"
+#pidfile="/var/run/lsyncd.pid"
+#prog="lsyncd"
+#RETVAL=0
 
-start() {
-    if [ -f $lockfile ]; then
-        echo -n $"$prog is already running: "
-        echo
-        else
-        echo -n $"Starting $prog: "
-        daemon $lsyncd -pidfile $pidfile $config
-        RETVAL=$?
-        echo
-        [ $RETVAL = 0 ] && touch $lockfile
-        return $RETVAL
-    fi
-}
-
-stop() {
-    echo -n $"Stopping $prog: "
-    killproc $lsyncd
-    RETVAL=$?
-    echo
-    [ $RETVAL = 0 ] && rm -f $lockfile
-    return $RETVAL
-}
-
-case "$1" in
-    start)
-        start
-        ;;
-    stop)
-        stop
-        ;;
-    restart)
-        stop
-        start
-        ;;
-    status)
-        status $lsyncd
-        ;;
-    *)
-        echo "Usage: lsyncd {start|stop|restart|status}"
-        exit 1
-esac
-
-exit $?
-EOF
-chown root /etc/init.d/lsyncd
-chmod 755 /etc/init.d/lsyncd
+#start() {
+#    if [ -f $lockfile ]; then
+#        echo -n $"$prog is already running: "
+#        echo
+#        else
+#        echo -n $"Starting $prog: "
+#        daemon $lsyncd -pidfile $pidfile $config
+#        RETVAL=$?
+#        echo
+#        [ $RETVAL = 0 ] && touch $lockfile
+#        return $RETVAL
+#    fi
+#}
+#
+#stop() {
+#    echo -n $"Stopping $prog: "
+#    killproc $lsyncd
+#    RETVAL=$?
+#    echo
+#    [ $RETVAL = 0 ] && rm -f $lockfile
+#    return $RETVAL
+#}
+#
+#case "$1" in
+#    start)
+#        start
+#        ;;
+#    stop)
+#        stop
+#        ;;
+#    restart)
+#        stop
+#        start
+#        ;;
+#    status)
+#        status $lsyncd
+#        ;;
+#    *)
+#        echo "Usage: lsyncd {start|stop|restart|status}"
+#        exit 1
+#esac
+#
+#exit $?
+#EOF
+#chown root /etc/init.d/lsyncd
+#chmod 755 /etc/init.d/lsyncd
 chkconfig lsyncd on
-cat << 'EOF' > /etc/lsyncd.lua
+cat << 'EOF' > /etc/lsyncd.conf
 settings {
    logfile = "/var/log/lsyncd/lsyncd.log",
    statusFile = "/var/log/lsyncd/lsyncd-status.log",
@@ -114,11 +115,12 @@ end
 EOF
 fi
 if [ -f /etc/debian_version ]; then
-apt-get install -y make lua5.1 liblua5.1-dev pkg-config rsync asciidoc && \
-wget -O /root/lsyncd-2.1.5.tar.gz https://lsyncd.googlecode.com/files/lsyncd-2.1.5.tar.gz && \
-tar -xvzf lsyncd-2.1.5.tar.gz && \
-cd lsyncd-2.1.5 && \ 
-./configure && make && make install && \
+#apt-get install -y make lua5.1 liblua5.1-dev pkg-config rsync asciidoc && \
+apt-get -y install lsyncd
+#wget -O /root/lsyncd-2.1.5.tar.gz https://lsyncd.googlecode.com/files/lsyncd-2.1.5.tar.gz && \
+#tar -xvzf lsyncd-2.1.5.tar.gz && \
+#cd lsyncd-2.1.5 && \ 
+#./configure && make && make install && \
 mkdir /var/log/lsyncd && \
 cat << 'EOF' > /etc/logrotate.d/lsyncd 
 /var/log/lsyncd/*log {
@@ -132,24 +134,24 @@ cat << 'EOF' > /etc/logrotate.d/lsyncd
   endscript
 }
 EOF
-cat << 'EOF' > /etc/init/lsyncd.conf
-description "lsyncd file syncronizer"
- 
-start on (starting network-interface
- or starting network-manager
- or starting networking)
-   
-stop on runlevel [!2345]
-   
-expect fork
-   
-respawn
-respawn limit 10 5
-   
-exec /usr/local/bin/lsyncd -pidfile /var/run/lsyncd.pid /etc/lsyncd.lua
-EOF
-ln -s /lib/init/upstart-job /etc/init.d/lsyncd && \
-cat << 'EOF' > /etc/lsyncd.lua
+#cat << 'EOF' > /etc/init/lsyncd.conf
+#description "lsyncd file syncronizer"
+# 
+#start on (starting network-interface
+# or starting network-manager
+# or starting networking)
+#   
+#stop on runlevel [!2345]
+#   
+#expect fork
+#   
+#respawn
+#respawn limit 10 5
+#   
+#exec /usr/local/bin/lsyncd -pidfile /var/run/lsyncd.pid /etc/lsyncd.lua
+#EOF
+#ln -s /lib/init/upstart-job /etc/init.d/lsyncd && \
+cat << 'EOF' > /etc/lsyncd/lsyncd.conf.lua
 settings {
    logfile = "/var/log/lsyncd/lsyncd.log",
    statusFile = "/var/log/lsyncd/lsyncd-status.log",
