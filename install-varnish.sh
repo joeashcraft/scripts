@@ -6,7 +6,7 @@ if [ -f /etc/redhat-release ]; then
     sed -i "s/Linux 5/Linux $myversion/g" /etc/yum.repos.d/varnish.repo
   fi
   yum -y install varnish
-  wget -O- /etc/varnish/wordpress.vcl 
+  wget -O /etc/varnish/wordpress.vcl https://raw.githubusercontent.com/tbr0/scripts/master/wordpress.vcl
 fi
 if [ -f /etc/debian_version ]; then
   if [ $(lsb_release -c | awk '{print $2}') == "lucid" ];then
@@ -15,4 +15,5 @@ if [ -f /etc/debian_version ]; then
   fi
   apt-get -q=2 update
   apt-get -y install varnish libvarnishapi1
+  wget -O /etc/varnish/wordpress.vcl https://raw.githubusercontent.com/tbr0/scripts/master/wordpress.vcl
 fi
