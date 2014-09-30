@@ -1,5 +1,5 @@
 if [ -f /etc/redhat-release ]; then
-  yum install -y git
+  yum install -y git python-pip python-devel gcc
   pip install paramiko PyYAML jinja2 httplib2 ansible
   git clone https://github.com/rackspace-orchestration-templates/lamp
   cd lamp/site-cookbooks/LAMP/files/default/lamp 
