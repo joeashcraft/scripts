@@ -1,5 +1,5 @@
-yum install nginx
-yum install php54-fpm
+yum install -y nginx
+yum install -y php54-fpm
 sed -i "s|listen = 127.0.0.1:9000|listen = /var/run/php5-fpm.sock|" /etc/php-fpm.d/www.conf
 service php-fpm start
 mkdir /etc/nginx/global
