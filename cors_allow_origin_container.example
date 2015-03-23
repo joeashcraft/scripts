@@ -1,0 +1,1 @@
+curl -i -X POST https://storage101.lon3.clouddrive.com/v1/MossoCloudFS_XXXXX/mycontainer/ -H "X-Auth-Token: YYYYY" -H "X-Container-Meta-Access-Control-Allow-Origin: *"
