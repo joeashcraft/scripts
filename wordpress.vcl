@@ -25,6 +25,12 @@ sub vcl_recv {
         }
     }
     
+    ## prevents admin-ajax requests pounding the master server due to the next rule. kind of experimental but so far, so good.
+    if (req.url ~ "admin-ajax" && req.http.Content-Type !~ "multipart/form-data")
+    {
+       return(pass);
+    }
+    
     ### do not cache these files:
     ##never cache the admin pages, or the server-status page
     if (req.url ~ "wp-(admin|login)" || req.http.Content-Type ~ "multipart/form-data")
