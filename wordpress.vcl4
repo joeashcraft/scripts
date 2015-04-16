@@ -139,9 +139,12 @@ sub vcl_backend_response {
     if (bereq.url ~ "^/$") {
         unset beresp.http.set-cookie;
     }
-    if (!(bereq.url ~ "wp-(login|admin)")) {
-        unset beresp.http.set-cookie;
-    }
+
+    ## This was breaking the cart, because the cookie was gone when the user landed on /cart, for woocommerce.
+    #if (!(bereq.url ~ "wp-(login|admin)")) {
+    #    unset beresp.http.set-cookie;
+    #}
+
     if (bereq.method == "PURGE") {
         set beresp.ttl = 0s;
     }
