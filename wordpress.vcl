@@ -30,6 +30,14 @@ sub vcl_recv {
     {
        return(pass);
     }
+
+    ### woocommerce config
+    if (req.url ~ "^/(cart|my-account|checkout|addons)") {
+        return (pass);
+    }
+    if ( req.url ~ "\?add-to-cart=" ) {
+        return (pass);
+    }
     
     ### do not cache these files:
     ##never cache the admin pages, or the server-status page
@@ -110,6 +118,14 @@ sub vcl_hit {
         error 200 "Purged.";
     }
 }
+
+sub vcl_hash {
+  ## Keep a separate cache for HTTP and HTTPS requests that come in over an SSL Terminated Load Balancer
+    if (req.http.x-forwarded-proto) {
+        hash_data(req.http.x-forwarded-proto);
+    }
+}
+
 sub vcl_miss {
     if (req.request == "PURGE") {
         error 404 "Not in cache.";
