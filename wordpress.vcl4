@@ -78,7 +78,7 @@ sub vcl_recv {
         set req.http.Cookie = regsuball(req.http.Cookie, "wordpress_test_cookie=", "; wpjunk=");
     }
     ### don't cache authenticated sessions
-    if (req.http.Cookie && req.http.Cookie ~ "(wordpress_|PHPSESSID)") {
+    if (req.http.Cookie && req.http.Cookie ~ "(wordpress_|PHPSESSID|woocommerce)") {
         return(pass);
     }
   
