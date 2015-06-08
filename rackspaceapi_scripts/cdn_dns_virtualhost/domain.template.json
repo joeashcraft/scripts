@@ -5,7 +5,7 @@
       "records" : [ {
         "name" : "DOMAIN",
         "type" : "A",
-        "data" : "104.130.170.243",
+        "data" : "IP_ADDRESS",
         "ttl" : 300
       }, {
         "name" : "origin.DOMAIN",
@@ -30,6 +30,6 @@
       } ]
     },
     "ttl" : 300,
-    "emailAddress" : "support@doctorsinternet.com"
+    "emailAddress" : "EMAIL_ADDRESS"
   } ]
 }

@@ -10,6 +10,8 @@ fi
 DOMAIN=${1}
 DDI="893337"
 #MARKER=`bash get_last_cdn_serviceid.sh`
+EMAIL_ADDRESS="taylor.broesche@rackspace.com"
+IP_ADDRESS="192.168.3.1"
 
 ## Functions ##
 # This function assumes "default.template" is available for copy.
@@ -18,7 +20,7 @@ function create_vhost_from_template_and_domain {
 }
 
 function create_cdn_from_domain {
-  sed s/DOMAIN/${DOMAIN}/g data.template.json > data.json
+  sed s/DOMAIN/${DOMAIN}/g data.template.json | sed s/EMAIL_ADDRESS/${EMAIL_ADDRESS}/g | sed s/IP_ADDRESS/${IP_ADDRESS}/g > data.json
   curl -sX POST -H "X-Auth-Token: ${TOKEN}" -H "Content-Type: application/json" https://global.cdn.api.rackspacecloud.com/v1.0/${DDI}/services -d @data.json
 }
 
@@ -53,7 +55,9 @@ if [ ${NUMBERSERV} != 10 ] then
   sleep 25
   CDNHREF=`get_cdn_href_from_domain`
   echo "CDN HREF: ${CDNHREF}"
-  #create_dns_from_cdn_and_domain
+  echo "Creating DNS entires..."
+  create_dns_from_cdn_and_domain
+  echo "Done."
 else
   echo "${NUMBERSERV} more than 10, need to go for a loop.."
 fi
