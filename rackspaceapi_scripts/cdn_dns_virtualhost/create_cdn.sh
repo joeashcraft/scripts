@@ -1,17 +1,27 @@
+### Description ###############################
+#  Provide the script with a root domain and 
+#  it will automatically create the CDN service, 
+#  DNS, and virtual host. This script is for creating
+#  CDN services that follow the "www" method. Where
+#  all traffic is redirected to "www.example.com"
+#  from "example.com" and "origin.example.com" is
+#  the origin.
+###############################################
+
 ## Must have arguements.
 if [ -z "$1" ]
   then
-    echo "No arguments supplied. Please provide a domain."
+    echo "No arguments supplied. Please provide a domain; no subdomains."
     exit
 fi
 ##
 
 ## Variables ##
+# You should export your token with "export TOKEN=xxxxxxxxxxxx"
 DOMAIN=${1}
 DDI="893337"
-#MARKER=`bash get_last_cdn_serviceid.sh`
-EMAIL_ADDRESS="taylor.broesche@rackspace.com"
-IP_ADDRESS="192.168.3.1"
+EMAIL_ADDRESS="taylor.broesche@rackspace.com"  # Email address used when creating DNS entry.
+IP_ADDRESS="192.168.3.1" # IP Address for root domain and "origin" subdomain.
 
 ## Functions ##
 # This function assumes "default.template" is available for copy.
