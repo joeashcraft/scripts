@@ -1,0 +1,32 @@
+{
+    "name": "DOMAIN",
+    "domains": [
+        {
+            "domain": "www.DOMAIN"
+        }
+    ],
+    "origins": [
+        {
+            "origin": "origin.DOMAIN",
+            "port": 80,
+            "ssl": false,
+	    "rules": []
+        }
+    ],
+    "caching": [
+        {
+            "name": "Default",
+            "ttl": 28800,
+	    "rules": [
+	        {
+		    "name": "Default",
+		    "request_url": "/*"
+		}
+	    ]
+        }
+    ],
+    "log_delivery": {
+        "enabled": true
+    },   
+    "flavor_id": "cdn"
+   }

@@ -1,0 +1,35 @@
+{
+  "domains" : [ {
+    "name" : "DOMAIN",
+    "recordsList" : {
+      "records" : [ {
+        "name" : "DOMAIN",
+        "type" : "A",
+        "data" : "104.130.170.243",
+        "ttl" : 300
+      }, {
+        "name" : "origin.DOMAIN",
+        "type" : "CNAME",
+        "data" : "DOMAIN",
+        "ttl" : 300
+      }, {
+        "name" : "DOMAIN",
+        "type" : "NS",
+        "data" : "dns1.stabletransit.com",
+        "ttl" : 3600
+      }, {
+        "name" : "DOMAIN",
+        "type" : "NS",
+        "data" : "dns2.stabletransit.com",
+        "ttl" : 3600
+      }, {
+        "name" : "www.DOMAIN",
+        "type" : "CNAME",
+        "data" : "CDN",
+        "ttl" : 300
+      } ]
+    },
+    "ttl" : 300,
+    "emailAddress" : "support@doctorsinternet.com"
+  } ]
+}
