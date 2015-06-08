@@ -70,6 +70,11 @@ function get_last_id_with_marker {
 #}
 
 ## Main ##
+## Vhost creation is commented out because it takes setting up default.template
+## first to work. Also, this script has only been tested on RHEL based systems.
+## For this customer, he would create the document root and upload the content,
+## so in this case, I only need to copy, then replace the domain.
+
 #echo "Creating virtual host from template.."
 #create_vhost_from_template_and_domain
 echo "Checking number of current CDN services..."
