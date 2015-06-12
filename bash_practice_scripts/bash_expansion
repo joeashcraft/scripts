@@ -1,0 +1,5 @@
+#!/bin/env bash
+foo="sub.example.com"
+
+# String replacement with expansion.
+echo ${foo//./_}

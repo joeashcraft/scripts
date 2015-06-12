@@ -1,0 +1,7 @@
+## Required ##
+DBHOST="192.168.3.3" ## The host of the database, this value will be used to define DB_HOST in wp-config.php
+GRANTHOST="192.168.3.%" ## The host used in the grant statement, example "grant all on dbname. * to 'user'@'192.168.3.%'"
+
+## Optional ##
+OWNER="" ## The owner for setting permissions; "chown owner:apache". Default owner is root.
+GROUP="" ## The group what will get write permissions. Defaults to "apache" or "www-data" depending on Linux flavor.

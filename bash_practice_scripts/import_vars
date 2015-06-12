@@ -1,0 +1,3 @@
+#!/bin/env bash
+source vars
+echo $var1
