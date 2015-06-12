@@ -1,5 +1,5 @@
 DOMAIN=${1}
-DDI="959019"
+DDI=""
 
 ## Function assumes domain given is a subdomain, and removes it.
 function get_domain_id_with_domain {
@@ -13,7 +13,7 @@ function set_record_with_domain_id {
     \"records\" : [ {
       \"name\" : \"${DOMAIN}\",
       \"type\" : \"A\",
-      \"data\" : \"162.209.114.197\",
+      \"data\" : \"\",
       \"ttl\" : 300 } ]
   }" &> /dev/null
 }
