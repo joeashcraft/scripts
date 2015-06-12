@@ -3,7 +3,7 @@
 DOMAIN=${1}
 
 if [[ ${DOMAIN} =~ [^A-Z^a-z^0-9.-] ]]; then 
-    echo "Invalid characted detected, exiting."
+    echo "Invalid character detected, exiting."
     exit 1
 fi
 
