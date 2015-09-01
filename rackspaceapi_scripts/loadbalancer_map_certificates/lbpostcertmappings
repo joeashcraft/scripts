@@ -1,0 +1,4 @@
+#!/bin/bash
+region=$1
+loadbalancerid=$2
+curl -X POST -H "X-Auth-Token: ${TOKEN}" -H "Content-Type: application/xml" "https://${region}.loadbalancers.api.rackspacecloud.com/v1.0/${DDI}/loadbalancers/${loadbalancerid}/ssltermination/certificatemappings" -d "@test-data.xml"

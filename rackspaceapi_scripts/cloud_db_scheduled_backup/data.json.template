@@ -1,0 +1,9 @@
+{
+    "schedule": {
+        "action": "backup",
+        "day_of_week": 1,
+        "hour": 3,
+        "instance_id": "INSTANCE_ID",
+        "minute": 0
+    }
+}
