@@ -1,3 +1,4 @@
+#!/bin/bash
 region=$1
 loadbalancerid=$2
 curl -skH "X-Auth-Token: ${TOKEN}" https://${region}.loadbalancers.api.rackspacecloud.com/v1.0/${DDI}/loadbalancers/${loadbalancerid}/ssltermination | python -mjson.tool
