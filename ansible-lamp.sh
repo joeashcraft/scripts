@@ -1,5 +1,5 @@
 if [ -f /etc/redhat-release ]; then
-  yum install -y git python-pip python-devel python-virtualenv gcc
+  yum install -y libffi-devel openssl-devel git python-pip python-devel python-virtualenv gcc
   virtualenv /root/lampenv;  cd /root/lampenv; source bin/activate
   pip install paramiko PyYAML jinja2 httplib2 ansible
   git clone https://github.com/rillip3/lamp.git
@@ -7,7 +7,7 @@ if [ -f /etc/redhat-release ]; then
   ansible-playbook -i hosts site.yml
 fi
 if [ -f /etc/debian_version ]; then
-  apt-get update && apt-get -y install python-apt python-pip build-essential python-dev python-virtualenv git
+  apt-get update && apt-get -y install libffi-dev libssl-dev python-apt python-pip build-essential python-dev python-virtualenv git
   virtualenv /root/lampenv;  cd /root/lampenv; source bin/activate
   pip install paramiko PyYAML jinja2 httplib2 ansible
   git clone https://github.com/rillip3/lamp.git
