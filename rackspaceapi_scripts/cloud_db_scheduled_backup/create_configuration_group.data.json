@@ -1,0 +1,12 @@
+{
+    "configuration": {
+        "values": {
+            "wait_timeout": 7800, 
+            "open-files-limit": 3200,
+            "query_cache_size": 12582912, 
+            "max_connections": 300
+        }, 
+        "description": "solr_config", 
+        "name": "solr_config"
+    }
+}
