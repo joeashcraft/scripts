@@ -78,5 +78,5 @@ cat << EOF > /etc/httpd/vhost.d/${DOMAIN}.conf
 #        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown
 #</VirtualHost>
 EOF
-mkdir /var/www/vhosts/${DOMAIN}
-systemctl reload httpd
+if [ ! -d /var/www/vhosts/${DOMAIN} ]; then mkdir /var/www/vhosts/${DOMAIN}; fi
+#systemctl reload httpd
