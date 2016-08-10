@@ -2,17 +2,33 @@
 DOMAIN=${1}
 CONFIG_PATH=''
 
+if [ ! -d /var/www/vhosts ]; then 
+    echo "No parent folder for document root, has LAMP kick been installed? Continuing with Apache Virtual Host configuration...";
+fi
+
 if [ -f /etc/redhat-release ]; then
     CONFIG_PATH="/etc/httpd/vhost.d";
+    echo "Red Hat Environment Detected...";
+    if [ ! -d /etc/httpd/vhost.d ]; then 
+        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        exit;
+    fi
 fi
 if [ -f /etc/debian_version ]; then
     CONFIG_PATH="/etc/apache2/sites-available";
+    echo "Debian Environment Detected...";
+    if [ ! -d /etc/apache2/sites-available ]; then 
+        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        exit;
+    fi
 fi
 if [ -z ${CONFIG_PATH} ]; then
     echo "Could not determine configuration path for Apache, exiting.."; exit;
 fi
 
-cat << EOF > ${PATH}/${DOMAIN}.conf
+echo "Configuration path: ${CONFIG_PATH}/${DOMAIN}"
+
+cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 <VirtualHost *:80>
         ServerName ${DOMAIN}
         ServerAlias www.${DOMAIN}
@@ -90,6 +106,14 @@ cat << EOF > ${PATH}/${DOMAIN}.conf
 #        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown
 #</VirtualHost>
 EOF
+
+echo "Virtual Host configured:"
+echo "========================"
+echo "Virtual Host: ${DOMAIN}";
+echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
+echo "Document Root: /var/www/vhosts/${DOMAIN}";
+echo "========================"
+
 if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
     mkdir /var/www/vhosts/${DOMAIN}; 
 else
