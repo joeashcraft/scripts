@@ -1,6 +1,18 @@
 #!/bin/bash
 DOMAIN=${1}
-cat << EOF > /etc/httpd/vhost.d/${DOMAIN}.conf
+CONFIG_PATH=''
+
+if [ -f /etc/redhat-release ]; then
+    CONFIG_PATH="/etc/httpd/vhost.d";
+fi
+if [ -f /etc/debian_version ]; then
+    CONFIG_PATH="/etc/apache2/sites-available";
+fi
+if [ -z ${CONFIG_PATH} ]; then
+    echo "Could not determine configuration path for Apache, exiting.."; exit;
+fi
+
+cat << EOF > ${PATH}/${DOMAIN}.conf
 <VirtualHost *:80>
         ServerName ${DOMAIN}
         ServerAlias www.${DOMAIN}
@@ -78,5 +90,9 @@ cat << EOF > /etc/httpd/vhost.d/${DOMAIN}.conf
 #        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown
 #</VirtualHost>
 EOF
-if [ ! -d /var/www/vhosts/${DOMAIN} ]; then mkdir /var/www/vhosts/${DOMAIN}; fi
+if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
+    mkdir /var/www/vhosts/${DOMAIN}; 
+else
+    echo "Document root exists, not creating folder but configuration exists, exiting..."; exit;
+fi
 #systemctl reload httpd
