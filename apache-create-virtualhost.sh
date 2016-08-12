@@ -3,11 +3,7 @@ DOMAIN=${1}
 CONFIG_PATH=''
 
 if [ ! -d /var/www/vhosts ]; then 
-<<<<<<< HEAD
-    echo -e "\e[1mNo \"vhosts\" folder found.";
-=======
-    echo "No parent folder for document root, has LAMP kick been installed? Continuing with Apache Virtual Host configuration...";
->>>>>>> af6c9b49e52a03dfe4e4b1f0abc0764ac9be83ae
+    echo -e "\e[1mNo \"vhosts\" folder found!";
 fi
 
 if [ -f /etc/redhat-release ]; then
@@ -114,17 +110,13 @@ EOF
 echo "Virtual Host configured:"
 echo "========================"
 echo "Virtual Host: ${DOMAIN}";
-<<<<<<< HEAD
-echo "Configuration file: ${CONFIG_PATH}/${DOMAIN}.conf";
-=======
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
->>>>>>> af6c9b49e52a03dfe4e4b1f0abc0764ac9be83ae
 echo "Document Root: /var/www/vhosts/${DOMAIN}";
 echo "========================"
 
 if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
     mkdir /var/www/vhosts/${DOMAIN}; 
 else
-    echo "Document root exists, not creating folder but configuration exists, exiting..."; exit;
+    echo "Document root already exists, exiting."; exit;
 fi
 #systemctl reload httpd
