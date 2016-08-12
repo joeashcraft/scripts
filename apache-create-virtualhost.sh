@@ -1,6 +1,34 @@
 #!/bin/bash
 DOMAIN=${1}
-cat << EOF > /etc/httpd/vhost.d/${DOMAIN}.conf
+CONFIG_PATH=''
+
+if [ ! -d /var/www/vhosts ]; then 
+    echo -e "\e[1mNo \"vhosts\" folder found.";
+fi
+
+if [ -f /etc/redhat-release ]; then
+    CONFIG_PATH="/etc/httpd/vhost.d";
+    echo "Red Hat Environment Detected...";
+    if [ ! -d /etc/httpd/vhost.d ]; then 
+        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        exit;
+    fi
+fi
+if [ -f /etc/debian_version ]; then
+    CONFIG_PATH="/etc/apache2/sites-available";
+    echo "Debian Environment Detected...";
+    if [ ! -d /etc/apache2/sites-available ]; then 
+        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        exit;
+    fi
+fi
+if [ -z ${CONFIG_PATH} ]; then
+    echo "Could not determine configuration path for Apache, exiting.."; exit;
+fi
+
+echo "Configuration path: ${CONFIG_PATH}/${DOMAIN}"
+
+cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 <VirtualHost *:80>
         ServerName ${DOMAIN}
         ServerAlias www.${DOMAIN}
@@ -78,5 +106,17 @@ cat << EOF > /etc/httpd/vhost.d/${DOMAIN}.conf
 #        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown
 #</VirtualHost>
 EOF
-if [ ! -d /var/www/vhosts/${DOMAIN} ]; then mkdir /var/www/vhosts/${DOMAIN}; fi
+
+echo "Virtual Host configured:"
+echo "========================"
+echo "Virtual Host: ${DOMAIN}";
+echo "Configuration file: ${CONFIG_PATH}/${DOMAIN}.conf";
+echo "Document Root: /var/www/vhosts/${DOMAIN}";
+echo "========================"
+
+if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
+    mkdir /var/www/vhosts/${DOMAIN}; 
+else
+    echo "Document root exists, not creating folder but configuration exists, exiting..."; exit;
+fi
 #systemctl reload httpd
