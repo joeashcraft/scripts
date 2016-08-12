@@ -106,11 +106,12 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 #</VirtualHost>
 EOF
 
-echo -e "\e[90mVirtual Host Configuration\e[0m"
 echo ""
+echo -e "\e[90mVirtual Host Configuration\e[0m"
 echo "Virtual Host: ${DOMAIN}";
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
 echo "Document Root: /var/www/vhosts/${DOMAIN}";
+echo ""
 
 if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
     mkdir /var/www/vhosts/${DOMAIN}; 
