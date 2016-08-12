@@ -106,7 +106,7 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 #</VirtualHost>
 EOF
 
-echo "\e[90mVirtual Host Configuration\e[0m"
+echo -e "\e[90mVirtual Host Configuration\e[0m"
 echo ""
 echo "Virtual Host: ${DOMAIN}";
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
