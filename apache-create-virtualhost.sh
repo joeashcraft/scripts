@@ -1,16 +1,17 @@
 #!/bin/bash
 DOMAIN=${1}
 CONFIG_PATH=''
+PARENT_ROOT='/var/www/vhosts'
 
-if [ ! -d /var/www/vhosts ]; then 
-    echo -e "\e[1mNo \"vhosts\" folder found!";
+if [ ! -d ${PARENT_ROOT} ]; then 
+    echo -e "\e[1mNo ${PARENT_ROOT} folder found!\e[0m";
 fi
 
 if [ -f /etc/redhat-release ]; then
     CONFIG_PATH="/etc/httpd/vhost.d";
     echo "Red Hat Environment Detected...";
     if [ ! -d /etc/httpd/vhost.d ]; then 
-        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        echo -e "\e[91mCannot find ${CONFIG_PATH}, exiting.\e[0m";
         exit;
     fi
 fi
@@ -18,15 +19,13 @@ if [ -f /etc/debian_version ]; then
     CONFIG_PATH="/etc/apache2/sites-available";
     echo "Debian Environment Detected...";
     if [ ! -d /etc/apache2/sites-available ]; then 
-        echo "No configuration directory for Apache, has LAMP kick been installed? Exiting...";
+        echo "Cannot find ${CONFIG_PATH}, exiting.";
         exit;
     fi
 fi
 if [ -z ${CONFIG_PATH} ]; then
-    echo "Could not determine configuration path for Apache, exiting.."; exit;
+    echo -e "\e[91mCould not determine configuration path for Apache, exiting.\e[0m"; exit;
 fi
-
-echo "Configuration path: ${CONFIG_PATH}/${DOMAIN}"
 
 cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 <VirtualHost *:80>
@@ -107,12 +106,11 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 #</VirtualHost>
 EOF
 
-echo "Virtual Host configured:"
-echo "========================"
+echo "\e[90mVirtual Host Configuration\e[0m"
+echo ""
 echo "Virtual Host: ${DOMAIN}";
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
 echo "Document Root: /var/www/vhosts/${DOMAIN}";
-echo "========================"
 
 if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
     mkdir /var/www/vhosts/${DOMAIN}; 
