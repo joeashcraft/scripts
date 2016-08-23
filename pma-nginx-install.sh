@@ -26,12 +26,12 @@ location ~ /phpmyadmin {
     auth_basic_user_file /etc/phpmyadmin/phpmyadmin-htpasswd;
 
     location ~ \.php$ { 
-        try_files $uri =404;
+        try_files \$uri =404;
         include fastcgi_params;
         fastcgi_pass   php5-fpm-sock;
         fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param  HTTPS $x_https;
+        fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param  HTTPS \$x_https;
     } 
 }
 EOF
@@ -62,15 +62,15 @@ server {
 
     location / {
         index  index.php index.html index.htm;
-        try_files $uri $uri/ /index.php?q=$uri&args;
+        try_files \$uri \$uri/ /index.php?q=\$uri&args;
 
     }
 
     location ~ \.php$ {
-        try_files $uri =404;
+        try_files \$uri =404;
         fastcgi_pass   php5-fpm-sock;
         fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         include fastcgi_params;
     }
 
@@ -90,7 +90,7 @@ server {
 #
 #    listen   80;
 #    server_name www.default;
-#    rewrite ^ http://default$request_uri? permanent;
+#    rewrite ^ http://default\$request_uri? permanent;
 #
 #}
 EOF
