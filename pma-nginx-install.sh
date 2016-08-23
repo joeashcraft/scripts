@@ -14,6 +14,61 @@ if [ -f /etc/debian_version ]; then
     update-rc.d nginx enable
     update-rc.d php5-fpm defaults
     update-rc.d php5-fpm enable
+
+    ## Modify nginx.conf and add x-forwarded-proto catch.
+    cat << EOF > /etc/nginx/nginx.conf
+user  www-data;
+worker_processes  8;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    access_log  /var/log/nginx/access.log;
+
+    sendfile        on;
+    tcp_nopush     on;
+    tcp_nodelay     on;
+
+    keepalive_timeout  65;
+
+    gzip  on;
+    gzip_comp_level 2;
+    gzip_buffers 16 8k;
+    gzip_proxied any;
+    gzip_types      text/plain text/css application/x-javascript application/xml application/xml+rss text/javascript application/json;
+    gzip_http_version 1.0;
+    gzip_disable "msie6";
+
+    # Set real IP addr from Cloud Loud Balancers
+    set_real_ip_from 10.183.248.0/22;
+    set_real_ip_from 10.183.252.0/23;
+    set_real_ip_from 10.190.254.0/23;
+    set_real_ip_from 10.189.254.0/23;
+    #set_real_ip_from 127.0.0.1;
+    real_ip_header X-Forwarded-For;
+
+    upstream php5-fpm-sock {
+        server unix:/var/run/php5-fpm.sock;
+    }
+
+    map \$http_x_forwarded_proto \$x_https {
+        default off;
+        https on;
+    }
+
+    include /etc/nginx/conf.d/*.conf;
+}
+EOF
     
     ## Setup Nginx for phpMyAdmin.
     mkdir /etc/nginx/include.d
@@ -36,8 +91,8 @@ location ~ /phpmyadmin {
 }
 EOF
 
-## Add include to default virtual host.
-cat << EOF > /etc/nginx/conf.d/000-default.conf
+    ## Add include to default virtual host.
+    cat << EOF > /etc/nginx/conf.d/000-default.conf
 server {
 
     listen   80;
@@ -68,10 +123,11 @@ server {
 
     location ~ \.php$ {
         try_files \$uri =404;
+        include fastcgi_params;
         fastcgi_pass   php5-fpm-sock;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-        include fastcgi_params;
+        fastcgi_param  HTTPS \$x_https
     }
 
 
