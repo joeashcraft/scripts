@@ -4,27 +4,27 @@ CONFIG_PATH=''
 PARENT_ROOT='/var/www/vhosts'
 
 if [ ! -d ${PARENT_ROOT} ]; then 
-    echo -e "\e[1mNo ${PARENT_ROOT} folder found!\e[0m";
+    echo -e "Notice: No ${PARENT_ROOT} folder found.";
 fi
 
 if [ -f /etc/redhat-release ]; then
     CONFIG_PATH="/etc/httpd/vhost.d";
-    echo "Red Hat Environment Detected...";
+    #echo "Red Hat Environment Detected...";
     if [ ! -d /etc/httpd/vhost.d ]; then 
-        echo -e "\e[91mCannot find ${CONFIG_PATH}, exiting.\e[0m";
+        echo -e "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
         exit;
     fi
 fi
 if [ -f /etc/debian_version ]; then
     CONFIG_PATH="/etc/apache2/sites-available";
-    echo "Debian Environment Detected...";
+    #echo "Debian Environment Detected...";
     if [ ! -d /etc/apache2/sites-available ]; then 
-        echo "Cannot find ${CONFIG_PATH}, exiting.";
+        echo "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
         exit;
     fi
 fi
 if [ -z ${CONFIG_PATH} ]; then
-    echo -e "\e[91mCould not determine configuration path for Apache, exiting.\e[0m"; exit;
+    echo -e "Fatal: Could not determine configuration path for Apache, exiting."; exit;
 fi
 
 cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
@@ -107,8 +107,7 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 EOF
 
 echo ""
-echo -e "\e[90mVirtual Host Configuration\e[0m"
-echo "Virtual Host: ${DOMAIN}";
+echo "Virtual Host: ${DOMAIN} www.${DOMAIN}";
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
 echo "Document Root: /var/www/vhosts/${DOMAIN}";
 echo ""
@@ -116,6 +115,6 @@ echo ""
 if [ ! -d /var/www/vhosts/${DOMAIN} ]; then 
     mkdir /var/www/vhosts/${DOMAIN}; 
 else
-    echo "Document root already exists, exiting."; exit;
+    echo "Fatal: Document root already exists, exiting."; exit;
 fi
 #systemctl reload httpd
