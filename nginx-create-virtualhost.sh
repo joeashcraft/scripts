@@ -50,17 +50,17 @@ server {
  
     location / {
         index  index.php index.html index.htm;
-        try_files $uri $uri/ /index.php?q=$uri&args;
+        try_files \$uri \$uri/ /index.php?q=\$uri&args;
  
     }
  
     location ~ \.php$ {
-        try_files $uri =404;
+        try_files \$uri =404;
         include fastcgi_params;
         fastcgi_pass   php5-fpm-sock;
         fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param  HTTPS $x_https;
+        fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param  HTTPS \$x_https;
     }
  
  
@@ -79,7 +79,7 @@ server {
 #
 #    listen   80;  
 #    server_name www.${DOMAIN};
-#    rewrite ^ http://${DOMAIN}$request_uri? permanent;
+#    rewrite ^ http://${DOMAIN}\$request_uri? permanent;
 #
 #}
 EOF
