@@ -4,14 +4,14 @@ CONFIG_PATH=''
 PARENT_ROOT='/var/www/vhosts'
 
 if [ ! -d ${PARENT_ROOT} ]; then 
-    echo -e "Notice: No ${PARENT_ROOT} folder found.";
+    echo "Notice: No ${PARENT_ROOT} folder found.";
 fi
 
 if [ -f /etc/redhat-release ]; then
     CONFIG_PATH="/etc/nginx/conf.d";
     #echo "Red Hat Environment Detected...";
     if [ ! -d ${CONFIG_PATH} ]; then 
-        echo -e "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
+        echo "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
         exit;
     fi
 fi
@@ -24,7 +24,7 @@ if [ -f /etc/debian_version ]; then
     fi
 fi
 if [ -z ${CONFIG_PATH} ]; then
-    echo -e "Fatal: Could not determine configuration path for Nginx, exiting."; exit;
+    echo "Fatal: Could not determine configuration path for Nginx, exiting."; exit;
 fi
 
 cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
@@ -41,12 +41,12 @@ server {
     #ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
     #ssl_prefer_server_ciphers on;
 
-    server_name  example.com;
-    server_name www.example.com;
-    root /var/www/vhosts/example.com;
+    server_name  ${DOMAIN};
+    server_name www.${DOMAIN};
+    root /var/www/vhosts/${DOMAIN};
 
-    access_log  /var/log/nginx/example.com_access.log;
-    error_log   /var/log/nginx/example.com_error.log error;
+    access_log  /var/log/nginx/${DOMAIN}_access.log;
+    error_log   /var/log/nginx/${DOMAIN}_error.log error;
  
     location / {
         index  index.php index.html index.htm;
@@ -78,13 +78,12 @@ server {
 #server {
 #
 #    listen   80;  
-#    server_name www.example.com;
-#    rewrite ^ http://example.com$request_uri? permanent;
+#    server_name www.${DOMAIN};
+#    rewrite ^ http://${DOMAIN}$request_uri? permanent;
 #
 #}
 EOF
 
-echo ""
 echo "Virtual Host: ${DOMAIN} www.${DOMAIN}";
 echo "Configuration File: ${CONFIG_PATH}/${DOMAIN}.conf";
 echo "Document Root: /var/www/vhosts/${DOMAIN}";
@@ -95,4 +94,3 @@ if [ ! -d /var/www/vhosts/${DOMAIN} ]; then
 else
     echo "Fatal: Document root already exists, exiting."; exit;
 fi
-#systemctl reload httpd
