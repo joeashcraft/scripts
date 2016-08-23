@@ -127,7 +127,7 @@ server {
         fastcgi_pass   php5-fpm-sock;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-        fastcgi_param  HTTPS \$x_https
+        fastcgi_param  HTTPS \$x_https;
     }
 
 
