@@ -5,7 +5,7 @@ DATABASE_NAME=${1}
 trove database-create ${UUID} ${DATABASE_NAME}
 USER_NAME=$(echo "${DATABASE_NAME}" | cut -b1-16)
 USER_PASS=$(apg -m22 -n1 -E'`$@!{}/\<>')
-trove user-create ${UUID} ${USER_NAME} ${USER_PASS} --database ${DATABASE_NAME}
+trove user-create ${UUID} ${USER_NAME} ${USER_PASS} --databases ${DATABASE_NAME}
 echo Host: ${DATABASE_HOST}
 echo Database: ${DATABASE_NAME}
 echo User: ${USER_NAME}
