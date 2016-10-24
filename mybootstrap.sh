@@ -13,6 +13,7 @@ installtrove () {
     virtualenv trove;
     . trove/bin/activate;
     pip install --upgrade setuptools;
+    pip install pytz;
     pip install python-troveclient rackspace-auth-openstack;
     echo "DDI:"; read DDI;
     echo "User:"; read USER;
