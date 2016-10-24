@@ -9,6 +9,7 @@ kicklamp () {
 getpass () {
     bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/getpass.sh")
 }
+
 installtrove () {
     virtualenv trove;
     . trove/bin/activate;
@@ -35,6 +36,6 @@ EOF
     source .trove
 }
 
-trove_createdb {
+trove_createdb () {
     bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/trove/dbaas_trove_create_database.sh") $1
 }
