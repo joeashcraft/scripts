@@ -35,6 +35,6 @@ EOF
     source .trove
 }
 
-#trove_createdb {
-#    bash <(curl -s 
-#}
+trove_createdb {
+    bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/trove/dbaas_trove_create_database.sh") $1
+}
