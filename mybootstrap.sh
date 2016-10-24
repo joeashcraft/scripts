@@ -25,7 +25,7 @@ export OS_AUTH_SYSTEM=rackspace
 export OS_USERNAME=${USER}
 export OS_TENANT_ID=${DDI}
 export TROVE_SERVICE_TYPE=rax:database
-export OS_KEY=${KEY}
+export OS_PASSWORD=${KEY}
 export OS_PROJECT_ID=${DDI}
 EOF
     source .trove
