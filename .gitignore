@@ -3,3 +3,4 @@ Vagrantfile
 .secret
 .private
 *.swp
+.supernova
