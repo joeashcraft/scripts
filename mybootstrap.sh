@@ -17,13 +17,14 @@ installtrove () {
     pip install pytz;
     pip install python-troveclient rackspace-auth-openstack;
     echo "DDI:"; read DDI;
+    echo "Region:(IAD,DFW, or ORD):"; read REGION
     echo "User:"; read USER;
     echo "Key:"; read KEY;
     echo "Database Host:"; read DB_HOST;
     echo "Database UUID:"; read DB_UUID;
     cat << EOF > .trove
 export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
-export OS_REGION_NAME=IAD
+export OS_REGION_NAME=${REGION}
 export OS_AUTH_SYSTEM=rackspace
 export OS_USERNAME=${USER}
 export OS_TENANT_ID=${DDI}
