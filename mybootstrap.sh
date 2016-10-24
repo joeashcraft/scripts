@@ -18,6 +18,8 @@ installtrove () {
     echo "DDI:"; read DDI;
     echo "User:"; read USER;
     echo "Key:"; read KEY;
+    echo "Database Host:"; read DB_HOST;
+    echo "Database UUID:"; read DB_UUID;
     cat << EOF > .trove
 export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
 export OS_REGION_NAME=IAD
@@ -27,6 +29,12 @@ export OS_TENANT_ID=${DDI}
 export TROVE_SERVICE_TYPE=rax:database
 export OS_PASSWORD=${KEY}
 export OS_PROJECT_ID=${DDI}
+export DB_HOST=${DB_HOST}
+export DB_UUID=${DB_UUID}
 EOF
     source .trove
 }
+
+#trove_createdb {
+#    bash <(curl -s 
+#}
