@@ -37,6 +37,11 @@ EOF
     source .trove
 }
 
-trove_createdb () {
+trove-createdb () {
     bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/trove/dbaas_trove_create_database.sh") $1
+}
+
+rhel7-addrepos-epel-ius () {
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    rpm -Uvh https://rhel7.iuscommunity.org/ius-release.rpm
 }
