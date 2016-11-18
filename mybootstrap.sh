@@ -45,3 +45,43 @@ rhel7-addrepos-epel-ius () {
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -Uvh https://rhel7.iuscommunity.org/ius-release.rpm
 }
+
+installvsftpd () {
+
+if [ -f /etc/redhat-release ]; then
+    myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
+    if [ "$myversion" -eq 6] then
+
+        echo "RHEL 6 Here"
+    fi
+    yum -y install vsftpd
+    chkconfig vsftpd on
+    > /etc/vsftpd/vsftpd.conf
+    sed -i -e 's/IPTABLES_MODULES=""/IPTABLES_MODULES="ip_conntrack_ftp"/g' /etc/sysconfig/iptables-config
+    modprobe ip_conntrack_ftp
+    cat << EOF > /etc/vsftpd.conf
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=YES
+listen=YES
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+pasv_min_port=60000
+pasv_max_port=65000
+EOF
+     service vsftpd start
+fi
+
+if [ -f /etc/debian_version ]; then
+
+echo "Debian here"
+
+fi
+
+}
