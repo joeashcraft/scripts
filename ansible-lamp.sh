@@ -1,7 +1,7 @@
 if [ -f /etc/redhat-release ]; then
-  yum install -y git python-pip python-devel gcc
+  yum install -y git python-pip python-devel gcc openssl-devel
   #pip install paramiko PyYAML jinja2 httplib2 ansible
-  pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe
+  pip install pip --upgrade
   pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
   git clone https://github.com/rillip3/lamp.git
   cd lamp/site-cookbooks/LAMP/files/default/lamp 
