@@ -85,3 +85,9 @@ echo "Debian here"
 fi
 
 }
+
+lsyncdmaas () {
+    git clone https://github.com/stevekaten/cloud-monitoring-plugin-deploy
+    cd cloud-monitoring-plugin-deploy
+    ansible-playbook -i hosts lsyncd_status.yml
+}
