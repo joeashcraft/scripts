@@ -50,8 +50,7 @@ installvsftpd () {
 
 if [ -f /etc/redhat-release ]; then
     myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
-    if [ "$myversion" -eq 6] then
-
+    if [ "$myversion" -eq 6 ]; then
         echo "RHEL 6 Here"
     fi
     yum -y install vsftpd
