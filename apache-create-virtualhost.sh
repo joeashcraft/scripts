@@ -2,6 +2,8 @@
 DOMAIN=${1}
 CONFIG_PATH=''
 PARENT_ROOT='/var/www/vhosts'
+APACHE_NAME=''
+SSL_PATH=''
 
 if [ ! -d ${PARENT_ROOT} ]; then 
     echo -e "Notice: No ${PARENT_ROOT} folder found.";
@@ -9,6 +11,8 @@ fi
 
 if [ -f /etc/redhat-release ]; then
     CONFIG_PATH="/etc/httpd/vhost.d";
+    APACHE_NAME="httpd";
+    SSL_PATH="/etc/pki/tls";
     #echo "Red Hat Environment Detected...";
     if [ ! -d /etc/httpd/vhost.d ]; then 
         echo -e "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
@@ -17,6 +21,8 @@ if [ -f /etc/redhat-release ]; then
 fi
 if [ -f /etc/debian_version ]; then
     CONFIG_PATH="/etc/apache2/sites-available";
+    APACHE_NAME="apache2";
+    SSL_PATH="/etc/ssl";
     #echo "Debian Environment Detected...";
     if [ ! -d /etc/apache2/sites-available ]; then 
         echo "Fatal: Cannot find ${CONFIG_PATH}, exiting.";
@@ -46,8 +52,8 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 		Order deny,allow
 		Allow from all
         </Directory>
-        CustomLog /var/log/httpd/${DOMAIN}-access.log combined
-        ErrorLog /var/log/httpd/${DOMAIN}-error.log
+        CustomLog /var/log/${APACHE_NAME}/${DOMAIN}-access.log combined
+        ErrorLog /var/log/${APACHE_NAME}/${DOMAIN}-error.log
         # New Relic PHP override
         <IfModule php5_module>
                php_value newrelic.appname ${DOMAIN}
@@ -80,17 +86,17 @@ cat << EOF > ${CONFIG_PATH}/${DOMAIN}.conf
 #                AllowOverride All
 #        </Directory>
 #
-#        CustomLog /var/log/httpd/${DOMAIN}-ssl-access.log combined
-#        ErrorLog /var/log/httpd/${DOMAIN}-ssl-error.log
+#        CustomLog /var/log/${APACHE_NAME}/${DOMAIN}-ssl-access.log combined
+#        ErrorLog /var/log/${APACHE_NAME}/${DOMAIN}-ssl-error.log
 #
 #        # Possible values include: debug, info, notice, warn, error, crit,
 #        # alert, emerg.
 #        LogLevel warn
 #
 #        SSLEngine on
-#        SSLCertificateFile    /etc/pki/tls/certs/2014-${DOMAIN}.crt
-#        SSLCertificateKeyFile /etc/pki/tls/private/2014-${DOMAIN}.key
-#        SSLCACertificateFile /etc/pki/tls/certs/2014-${DOMAIN}.ca.crt
+#        SSLCertificateFile    ${SSL_PATH}/certs/2016-${DOMAIN}.crt
+#        SSLCertificateKeyFile ${SSL_PATH}/private/2016-${DOMAIN}.key
+#        SSLCACertificateFile  ${SSL_PATH}/certs/2016-${DOMAIN}.ca.crt
 #
 #        <IfModule php5_module>
 #                php_value newrelic.appname ${DOMAIN}
