@@ -92,5 +92,6 @@ lsyncdmaas () {
 }
 getrackcli () {
     wget -O /opt/rack "https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.2/Linux/amd64/rack"
+    chmod +x /opt/rack
     ln -s /opt/rack /usr/bin/rack
 }
