@@ -5,12 +5,10 @@ apvhost () {
 kicklamp () {
     #bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/ansible-lamp.sh")
     if [ -f /etc/redhat-release ]; then
-      yum install -y git python-pip python-devel gcc openssl-devel holland
+      yum install -y git python-pip python-devel gcc openssl-devel holland-mysqldump
       yum -y update
-      #pip install paramiko PyYAML jinja2 httplib2 ansible
       pip install pip --upgrade
-      #pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
-      pip install paramiko PyYAML jinja2 httplib2 ansible markupsafe --upgrade
+      pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
       #git clone https://github.com/rillip3/lamp.git
       git clone https://github.com/rackerlabs/lamp.git
       cd lamp/site-cookbooks/LAMP/files/default/lamp
@@ -19,8 +17,7 @@ kicklamp () {
     if [ -f /etc/debian_version ]; then
       apt-get update && apt-get install python-markupsafe python-apt libffi-dev python-pip build-essential python-dev git -y
       pip install pip --upgrade
-      #pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
-      pip install paramiko PyYAML jinja2 httplib2 ansible markupsafe --upgrade
+      pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
       #git clone https://github.com/rillip3/lamp.git
       git clone https://github.com/rackerlabs/lamp.git
       cd lamp/site-cookbooks/LAMP/files/default/lamp
