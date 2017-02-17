@@ -118,4 +118,5 @@ getrackcli () {
 }
 codedeploybootstrap () {
     # placeholder
+    echo "I do nothing!";
 }
