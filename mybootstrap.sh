@@ -15,7 +15,8 @@ kicklamp () {
       ansible-playbook -i hosts site.yml
     fi
     if [ -f /etc/debian_version ]; then
-      apt-get update && apt-get install python-markupsafe python-apt libffi-dev python-pip build-essential python-dev git -y
+      #apt-get update && apt-get install python-markupsafe python-apt libffi-dev python-pip build-essential python-dev git -y
+      apt-get update && apt-get install libffi-dev python-pip build-essential python-dev git -y
       pip install pip --upgrade
       pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
       #git clone https://github.com/rillip3/lamp.git
