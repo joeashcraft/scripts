@@ -5,10 +5,12 @@ apvhost () {
 kicklamp () {
     #bash <(curl -s "https://raw.githubusercontent.com/tbr0/scripts/master/ansible-lamp.sh")
     if [ -f /etc/redhat-release ]; then
-      yum install -y git python-pip python-devel gcc openssl-devel
+      yum install -y git python-pip python-devel gcc openssl-devel holland
+      yum -y update
       #pip install paramiko PyYAML jinja2 httplib2 ansible
       pip install pip --upgrade
-      pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
+      #pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade
+      pip install paramiko PyYAML jinja2 httplib2 markupsafe --upgrade
       #git clone https://github.com/rillip3/lamp.git
       git clone https://github.com/rackerlabs/lamp.git
       cd lamp/site-cookbooks/LAMP/files/default/lamp
