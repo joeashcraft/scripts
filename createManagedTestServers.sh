@@ -1,4 +1,5 @@
 #!/bin/bash
+rack servers instance delete --name "centos7.test.tbr0" --wait-for-completion --profile "cloudlaunch"
 rack servers instance create --name "centos7.test.tbr0" \
 --flavor-id "general1-1" \
 --image-id "f2db6fd7-1e40-41f1-9ac0-ad8d1dfd7651" \
