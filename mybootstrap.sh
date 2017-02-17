@@ -95,3 +95,6 @@ getrackcli () {
     chmod +x /opt/rack
     ln -s /opt/rack /usr/bin/rack
 }
+codedeploybootstrap () {
+    # placeholder
+}
