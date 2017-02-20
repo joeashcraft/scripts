@@ -30,6 +30,6 @@ function create_ubuntu1604() {
     --profile "cloudlaunch"
 }
 
-#create_centos7;
-#create_ubuntu1404;
+create_centos7;
+create_ubuntu1404;
 create_ubuntu1604;
