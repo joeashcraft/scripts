@@ -49,7 +49,7 @@ rhel7-addrepos-epel-ius () {
 installvsftpd () {
 
 if [ -f /etc/redhat-release ]; then
-    myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
+    myversion=$(awk -F 'release' '{print $2}' /etc/redhat-release | tr -d " " | awk -F'.' '{print $1}')
     if [ "$myversion" -eq 6 ]; then
         echo "No RHEL6 support yet, sorry."
     fi
@@ -102,7 +102,7 @@ codedeploybootstrap () {
 
 installnfsd () {
 if [ -f /etc/redhat-release ]; then
-    myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
+    myversion=$(awk -F 'release' '{print $2}' /etc/redhat-release | tr -d " "| awk -F'.' '{print $1}')
     if [ "$myversion" -eq 7 ]; then
 
         yum install -y rpcbind nfs-utils nfs4-acl-tools
