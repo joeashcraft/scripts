@@ -10,6 +10,16 @@ function create_centos7() {
     --profile "cloudlaunch"
 }
 
+function create_centos6() {
+    rack servers instance delete --name "centos6.test.tbr0" --profile "cloudlaunch"
+    rack servers instance create --name "centos6.test.tbr0" \
+    --flavor-id "general1-1" \
+    --image-id "d4d7e0e9-3301-4c5d-b932-9104f28a5c20" \
+    --networks "00000000-0000-0000-0000-000000000000,11111111-1111-1111-1111-111111111111" \
+    --keypair "tbr0-key" \
+    --profile "cloudlaunch"
+}
+
 function create_ubuntu1404() {
     rack servers instance delete --name "ubuntu14.test.tbr0" --profile "cloudlaunch"
     rack servers instance create --name "ubuntu14.test.tbr0" \
@@ -31,5 +41,6 @@ function create_ubuntu1604() {
 }
 
 create_centos7;
+create_centos6;
 create_ubuntu1404;
 create_ubuntu1604;

@@ -51,7 +51,7 @@ installvsftpd () {
 if [ -f /etc/redhat-release ]; then
     myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
     if [ "$myversion" -eq 6 ]; then
-        echo "RHEL 6 Here"
+        echo "No RHEL6 support yet, sorry."
     fi
     yum -y install vsftpd
     chkconfig vsftpd on
@@ -74,12 +74,12 @@ tcp_wrappers=YES
 pasv_min_port=60000
 pasv_max_port=65000
 EOF
-     service vsftpd start
+    service vsftpd start
 fi
 
 if [ -f /etc/debian_version ]; then
 
-echo "Debian here"
+    echo "No Debian support yet, sorry."
 
 fi
 
@@ -96,6 +96,44 @@ getrackcli () {
     ln -s /opt/rack /usr/bin/rack
 }
 codedeploybootstrap () {
-    # placeholder
-    echo "I do nothing!";
+    echo "I'm not done yet!"
+    exit
+}
+
+installnfsd () {
+if [ -f /etc/redhat-release ]; then
+    myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
+    if [ "$myversion" -eq 7 ] then
+
+        yum install -y rpcbind nfs-utils nfs4-acl-tools
+        mkdir /exports
+        cat << EOF >> /etc/exports
+/exports      192.168.3.0/24(ro,no_subtree_check,fsid=0,crossmnt)
+/exports/data 192.168.3.0/24(rw,no_subtree_check,no_root_squash)
+EOF
+        printf "## Added by Rackspace Support\nRPCNFSDCOUNT=64" >> /etc/sysconfig/nfs
+        systemctl enable rpcbind nfs-server nfs-idmapd
+        systemctl start rpcbind nfs-server nfs-idmapd
+
+    fi
+    if [ "$myversion" -eq 6 ] then
+
+    echo "RHEL 6 Here"
+
+    fi
+fi
+
+if [ -f /etc/debian_version ]; then
+    if [ $(cat /etc/debian_version) = "jessie/sid" ]; then
+
+        echo "Ubuntu 14.04"
+
+    fi
+    if [ $(cat /etc/debian_version) = "stretch/sid" ]; then
+
+        echo "Ubuntu 16.04"
+
+    fi
+fi
+ 
 }

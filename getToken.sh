@@ -9,7 +9,7 @@ getToken() {
   HEADER1="Content-Type: application/json"
 
   curl -sX POST -H "${HEADER1}" ${OS_AUTH_URL} \
-  -d @- << EOF | jq '.access.token.id'
+  -d @- << EOF | jq -r '.access.token.id'
 {
     "auth": {
         "RAX-KSKEY:apiKeyCredentials": {
