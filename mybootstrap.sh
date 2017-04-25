@@ -52,6 +52,7 @@ if [ -f /etc/redhat-release ]; then
     myversion=$(awk -F 'release' '{print $2}' /etc/redhat-release | tr -d " " | awk -F'.' '{print $1}')
     if [ "$myversion" -eq 6 ]; then
         echo "No RHEL6 support yet, sorry."
+        exit
     fi
     yum -y install vsftpd
     chkconfig vsftpd on
@@ -80,6 +81,7 @@ fi
 if [ -f /etc/debian_version ]; then
 
     echo "No Debian support yet, sorry."
+    exit
 
 fi
 
