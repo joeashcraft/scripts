@@ -1,0 +1,28 @@
+{
+    "server": {
+        "block_device_mapping_v2": [
+            {
+                "boot_index": 0, 
+                "uuid": "762c7148-8264-4aaa-af35-ca94bff31b21", 
+                "volume_size": "50", 
+                "source_type": "snapshot", 
+                "destination_type": "volume", 
+                "delete_on_termination": false
+            }
+        ], 
+        "flavorRef": "compute1-4", 
+        "name": "hte-web02.drinkbai.com", 
+        "networks": [
+            {
+                "uuid": "00000000-0000-0000-0000-000000000000"
+            }
+	    {
+                "uuid": "11111111-1111-1111-1111-111111111111"
+	    }
+            {
+		"uuid": "b0b0cfcb-6099-49ff-b878-c85664c6a826"
+	    }
+        ]
+    }
+}
+

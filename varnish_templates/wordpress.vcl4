@@ -25,7 +25,7 @@ sub vcl_recv {
             set req.http.X-Forwarded-For = client.ip;
         }
     }
-    ## prevents admin-ajax requests pounding the master server due to the next rule. kind of experimental but so far, so good.
+    ## distribute admin-ajax evenly if it doesn't result in a file modification.
     if (req.url ~ "admin-ajax" && req.http.Content-Type !~ "multipart/form-data")
     {
        return(pass);

@@ -1,0 +1,6 @@
+#!/bin/bash
+TOKEN=""
+region=
+ddi=
+lb_id=
+curl -vsk -X DELETE -H "Content-Type: application/json" -H "X-Auth-Token: ${TOKEN}" "https://${region}.loadbalancers.api.rackspacecloud.com/v1.0/${ddi}/loadbalancers/${lb_id}/accesslist"
