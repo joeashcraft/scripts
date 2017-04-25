@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -f /etc/redhat-release ]; then
-    myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
+    myversion=$(awk -F 'release' '{print $2}' /etc/redhat-release | tr -d " "| awk -F'.' '{print $1}')
     if [ "$myversion" -eq 7 ]; then
 
     echo "RHEL 7 Here"
