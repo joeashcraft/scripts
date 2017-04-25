@@ -103,7 +103,7 @@ codedeploybootstrap () {
 installnfsd () {
 if [ -f /etc/redhat-release ]; then
     myversion=$(awk '{print $3}' /etc/redhat-release | awk -F'.' '{print $1}')
-    if [ "$myversion" -eq 7 ] then
+    if [ "$myversion" -eq 7 ]; then
 
         yum install -y rpcbind nfs-utils nfs4-acl-tools
         mkdir /exports
@@ -116,7 +116,7 @@ EOF
         systemctl start rpcbind nfs-server nfs-idmapd
 
     fi
-    if [ "$myversion" -eq 6 ] then
+    if [ "$myversion" -eq 6 ]; then
 
     echo "RHEL 6 Here"
 
