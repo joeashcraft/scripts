@@ -5,6 +5,7 @@ if [ -f /etc/redhat-release ]; then
     mkvirtualenv lampenv && \
     pip install pip --upgrade && \
     pip install paramiko PyYAML jinja2 httplib2 ansible==1.6.1 markupsafe --upgrade && \
+    ln -s ~/.virtualenvs/lampenv/lib/python2.7/site-packages/root/.virtualenvs/lampenv/share ~/.virtualenvs/lampenv/share && \
     git clone https://github.com/rackerlabs/lamp.git && \
     cd lamp/site-cookbooks/LAMP/files/default/lamp && \
     ansible-playbook -i hosts site.yml

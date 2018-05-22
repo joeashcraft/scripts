@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Requires "jq" application.
-OS_USER=""
-OS_API_KEY=""
+OS_USER="${1}"
+OS_API_KEY="${2}"
 
 getToken() {
 
@@ -22,5 +22,5 @@ EOF
 }
 
 OS_AUTH_TOKEN=$(getToken)
-#echo $OS_AUTH_TOKEN
+echo $OS_AUTH_TOKEN
 ## Now do what you need with $OS_AUTH_TOKEN
